@@ -87,8 +87,12 @@ assets:
         bindings: {}
     tiles: []
     extends: {}
-    lastmod: 1752979853144
-    events: []
+    lastmod: 1752981270442
+    events:
+      - eventKey: OnRoomStart
+        code: this.mainUi = rooms.append('UI_InGame');
+        arguments: {}
+        lib: core
     behaviors: []
     extendTypes: ''
     uid: jBtgdRwRzRPTT5
@@ -104,39 +108,29 @@ assets:
     events:
       - eventKey: OnStep
         lib: core
-        code: >-
+        code: |
           // Set movement speed
-
           this.mySpeed = 3;
 
-
           // Move based on input axis values
-
           this.x += actions.MoveX.value * this.mySpeed * u.delta;
-
           this.y += actions.MoveY.value * this.mySpeed * u.delta;
 
-
           // Clamp X position
-
           if (this.x < 0) {
               this.x = 0;
           } else if (this.x > camera.width) {
               this.x = camera.width;
           }
 
-
           // Clamp Y position
-
           if (this.y < 0) {
               this.y = 0;
           } else if (this.y > camera.height) {
               this.y = camera.height;
           }
 
-
           // Optional: flip sprite depending on direction
-
           if (actions.MoveX.value < 0) {
               this.scale.x = -1;
               this.facing = 'left';
@@ -146,92 +140,12 @@ assets:
           }
 
 
-
           // Optional: animation switching
-
           if (actions.MoveX.value !== 0 || actions.MoveY.value !== 0) {
               //this.play('walk');
           } else {
               //this.play('idle');
           }
-
-
-
-
-
-          //Note:  All previous code, need to see where I can fit this into the
-          game:
-
-
-          /*
-
-
-          camera.shiftX = this.scale.x * 15;
-
-
-          if (localStorage.getItem('speedLevel'))
-              this.mySpeed = localStorage.getItem('speedLevel');
-          else
-              this.mySpeed = 4
-
-          //if !(place.occupied this, this.x, this.y, 'Wall')
-
-          this.x += 8 * u.delta * actions.MoveX.value * this.mySpeed // Move by
-          X axis
-
-          // Check whether the ship fell off the viewport
-
-          if(this.x < 0) // Have the ship crossed the left border?
-              this.x = 0 // Go back to the left border
-          if(this.x > camera.width) // Have the ship crossed the right border?
-              this.x = camera.width // Go back to the right border
-
-          //if !(place.occupied this, this.x, this.y, 'Wall')
-
-          this.y += 5.5 * u.delta * actions.MoveY.value * this.mySpeed // Move
-          by Y axis
-
-          // Check whether the ship fell off the viewport
-
-          if(this.y < 0) // Have the ship crossed the left border?
-              this.y = 0 // Go back to the left border
-          if(this.y > camera.height) // Have the ship crossed the right border?
-              this.y = camera.height // Go back to the right border
-
-          if(actions.MoveX.value < 0) {
-              this.scale.x = -4
-              rooms.playerFacing = 'left'
-              this.direction = 180
-          }
-
-          else if(actions.MoveX.value > 0) {
-              this.scale.x = 4
-              rooms.playerFacing = 'right'
-              this.direction = 0
-          }
-
-
-          if(actions.MoveX.value != 0 || actions.MoveY.value != 0)
-              //this.tex = 'Knight_Run'
-          else
-              //this.tex = 'Knight_Idle'
-          this.play()
-
-
-          rooms.playerX = this.x
-
-          rooms.playerY = this.y
-
-
-          if(place.occupied(this, 'Wall')) {
-              this.x = this.xprev
-              this.y = this.yprev
-          }
-
-          this.moveSmart('Wall', 4)
-
-
-          */  //end of previous code
         arguments: {}
       - eventKey: OnCreate
         code: |-
@@ -257,7 +171,7 @@ assets:
         lib: core
     extends:
       cgroup: ''
-    lastmod: 1752979811526
+    lastmod: 1752982690090
     uid: 7b2n71wR3k6gd8
     behaviors: []
     extendTypes: ''
@@ -316,6 +230,149 @@ assets:
     padding: 1
     isBlank: false
     tiled: true
+  - lastmod: 1752981982530
+    type: texture
+    name: trackpad
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 64
+      - 64
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: izQrHLTrGn6fTKC.png
+    shape: rect
+    left: 64
+    right: 64
+    top: 64
+    bottom: 64
+    uid: zQrHLTrGn6fTKC
+    padding: 1
+    isBlank: false
+    source: >-
+      D:\Valentines2025\valentines2025\You Fight
+      Monsters\img\iKnzRfJg8tf8HTL.png
+  - lastmod: 1752981979027
+    type: texture
+    name: trackball
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 32
+      - 32
+    marginx: 0
+    marginy: 0
+    imgWidth: 64
+    imgHeight: 64
+    width: 64
+    height: 64
+    offx: 0
+    offy: 0
+    origname: i6NqqCN7Fwb3r7W.png
+    shape: rect
+    left: 32
+    right: 32
+    top: 32
+    bottom: 32
+    uid: 6NqqCN7Fwb3r7W
+    padding: 1
+    isBlank: false
+    source: >-
+      D:\Valentines2025\valentines2025\You Fight
+      Monsters\img\i4bcmCzFhHDJP1f.png
+  - type: template
+    baseClass: AnimatedSprite
+    name: trackpad
+    depth: 0
+    texture: zQrHLTrGn6fTKC
+    playAnimationOnStart: false
+    loopAnimation: true
+    animationFPS: 30
+    visible: true
+    events:
+      - eventKey: OnStep
+        lib: core
+        code: |-
+          this.button.x = this.x;
+          this.button.y = this.y;
+        arguments: {}
+      - eventKey: OnCreate
+        code: |-
+          this.button = vkeys.joystick({
+              key: 'Vjoy1',
+              tex: 'trackpad',
+              trackballTex: 'trackball',
+              depth: 100,
+              alpha: 0.7,
+              x: camera.left + 170,
+              y: camera.bottom - 170,
+              //x: () => camera.left + 170,
+              //y: () => camera.bottom - 170,
+              container: rooms.templates.UI_InGame
+          });
+
+          //this.button.visible = false;
+          this.button.parent = this.parent;
+        arguments: {}
+        lib: core
+    extends:
+      cgroup: ''
+    lastmod: 1752982513067
+    uid: RdTcmNcccdwhzj
+    behaviors: []
+    extendTypes: ''
+  - type: room
+    oncreate: ''
+    onstep: ''
+    ondraw: ''
+    onleave: ''
+    gridX: 64
+    gridY: 64
+    diagonalGrid: false
+    disableGrid: false
+    simulate: true
+    width: 1280
+    height: 720
+    restrictCamera: false
+    restrictMaxX: 1280
+    restrictMinX: 0
+    restrictMaxY: 720
+    restrictMinY: 0
+    isUi: true
+    name: UI_InGame
+    backgroundColor: '#000000'
+    follow: -1
+    backgrounds: []
+    copies:
+      - x: -448
+        'y': 640
+        opacity: 1
+        tint: 16777215
+        scale:
+          x: 1
+          'y': 1
+        rotation: 0
+        uid: RdTcmNcccdwhzj
+        exts: {}
+        customProperties: {}
+        bindings: {}
+    tiles: []
+    extends: {}
+    lastmod: 1752981965850
+    events: []
+    behaviors: []
+    extendTypes: ''
+    uid: Hm5mWWC4mF8gqG
 globalVars: []
 settings:
   authoring:
