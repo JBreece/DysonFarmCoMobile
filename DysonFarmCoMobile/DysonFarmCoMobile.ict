@@ -1,0 +1,373 @@
+ctjsVersion: 5.2.1
+backups: 3
+language: typescript
+notes: /* empty */
+libs:
+  place:
+    gridX: 1024
+    gridY: 1024
+  pointer: {}
+  keyboard: {}
+  keyboard.polyfill: {}
+  pointer.polyfill: {}
+  vkeys: {}
+startroom: -1
+contentTypes: []
+actions:
+  - name: Use
+    methods:
+      - code: vkeys.Vk1
+  - name: MoveY
+    methods:
+      - code: keyboard.ArrowUp
+        multiplier: -1
+      - code: keyboard.ArrowDown
+        multiplier: 1
+      - code: keyboard.KeyW
+        multiplier: -1
+      - code: keyboard.KeyS
+        multiplier: 1
+      - code: vkeys.Vjoy1Y
+  - name: MoveX
+    methods:
+      - code: keyboard.KeyA
+        multiplier: -1
+      - code: keyboard.KeyD
+      - code: keyboard.ArrowLeft
+        multiplier: -1
+      - code: keyboard.ArrowRight
+      - code: vkeys.Vjoy1X
+scripts: []
+assets:
+  - type: room
+    oncreate: ''
+    onstep: ''
+    ondraw: ''
+    onleave: ''
+    gridX: 64
+    gridY: 64
+    diagonalGrid: false
+    disableGrid: false
+    simulate: true
+    width: 1280
+    height: 720
+    restrictCamera: false
+    restrictMaxX: 1280
+    restrictMinX: 0
+    restrictMaxY: 720
+    restrictMinY: 0
+    isUi: false
+    name: StartRoom
+    backgroundColor: '#000000'
+    follow: -1
+    backgrounds:
+      - depth: 0
+        texture: R33143JGWdKQ1z
+        shiftX: 0
+        shiftY: 0
+        parallaxX: 1
+        parallaxY: 1
+        movementX: 0
+        movementY: 0
+        scaleX: 1
+        scaleY: 1
+        repeat: repeat
+    copies:
+      - x: 576
+        'y': 192
+        opacity: 1
+        tint: 16777215
+        scale:
+          x: 1
+          'y': 1
+        rotation: 0
+        uid: 7b2n71wR3k6gd8
+        exts: {}
+        customProperties: {}
+        bindings: {}
+    tiles: []
+    extends: {}
+    lastmod: 1752979853144
+    events: []
+    behaviors: []
+    extendTypes: ''
+    uid: jBtgdRwRzRPTT5
+  - type: template
+    baseClass: AnimatedSprite
+    name: Player
+    depth: 0
+    texture: g4GPz5DLthzgbw
+    playAnimationOnStart: false
+    loopAnimation: true
+    animationFPS: 30
+    visible: true
+    events:
+      - eventKey: OnStep
+        lib: core
+        code: >-
+          // Set movement speed
+
+          this.mySpeed = 3;
+
+
+          // Move based on input axis values
+
+          this.x += actions.MoveX.value * this.mySpeed * u.delta;
+
+          this.y += actions.MoveY.value * this.mySpeed * u.delta;
+
+
+          // Clamp X position
+
+          if (this.x < 0) {
+              this.x = 0;
+          } else if (this.x > camera.width) {
+              this.x = camera.width;
+          }
+
+
+          // Clamp Y position
+
+          if (this.y < 0) {
+              this.y = 0;
+          } else if (this.y > camera.height) {
+              this.y = camera.height;
+          }
+
+
+          // Optional: flip sprite depending on direction
+
+          if (actions.MoveX.value < 0) {
+              this.scale.x = -1;
+              this.facing = 'left';
+          } else if (actions.MoveX.value > 0) {
+              this.scale.x = 1;
+              this.facing = 'right';
+          }
+
+
+
+          // Optional: animation switching
+
+          if (actions.MoveX.value !== 0 || actions.MoveY.value !== 0) {
+              //this.play('walk');
+          } else {
+              //this.play('idle');
+          }
+
+
+
+
+
+          //Note:  All previous code, need to see where I can fit this into the
+          game:
+
+
+          /*
+
+
+          camera.shiftX = this.scale.x * 15;
+
+
+          if (localStorage.getItem('speedLevel'))
+              this.mySpeed = localStorage.getItem('speedLevel');
+          else
+              this.mySpeed = 4
+
+          //if !(place.occupied this, this.x, this.y, 'Wall')
+
+          this.x += 8 * u.delta * actions.MoveX.value * this.mySpeed // Move by
+          X axis
+
+          // Check whether the ship fell off the viewport
+
+          if(this.x < 0) // Have the ship crossed the left border?
+              this.x = 0 // Go back to the left border
+          if(this.x > camera.width) // Have the ship crossed the right border?
+              this.x = camera.width // Go back to the right border
+
+          //if !(place.occupied this, this.x, this.y, 'Wall')
+
+          this.y += 5.5 * u.delta * actions.MoveY.value * this.mySpeed // Move
+          by Y axis
+
+          // Check whether the ship fell off the viewport
+
+          if(this.y < 0) // Have the ship crossed the left border?
+              this.y = 0 // Go back to the left border
+          if(this.y > camera.height) // Have the ship crossed the right border?
+              this.y = camera.height // Go back to the right border
+
+          if(actions.MoveX.value < 0) {
+              this.scale.x = -4
+              rooms.playerFacing = 'left'
+              this.direction = 180
+          }
+
+          else if(actions.MoveX.value > 0) {
+              this.scale.x = 4
+              rooms.playerFacing = 'right'
+              this.direction = 0
+          }
+
+
+          if(actions.MoveX.value != 0 || actions.MoveY.value != 0)
+              //this.tex = 'Knight_Run'
+          else
+              //this.tex = 'Knight_Idle'
+          this.play()
+
+
+          rooms.playerX = this.x
+
+          rooms.playerY = this.y
+
+
+          if(place.occupied(this, 'Wall')) {
+              this.x = this.xprev
+              this.y = this.yprev
+          }
+
+          this.moveSmart('Wall', 4)
+
+
+          */  //end of previous code
+        arguments: {}
+      - eventKey: OnCreate
+        code: |-
+          this.animationSpeed = 0.2;
+          this.scale.x = 1;
+          this.scale.y = 1;
+          this.frameCounter = 0
+          this.facing = 'right';
+
+          camera.follow = this
+          camera.borderX = 450
+          camera.borderY = 200
+          camera.drift = 0.95;
+        arguments: {}
+        lib: core
+      - eventKey: OnDraw
+        code: |-
+          if(this.scale.x === -1)
+              this.playerFacing = 'left'
+          else if(this.scale.x === 1)
+              this.playerFacing = 'right'
+        arguments: {}
+        lib: core
+    extends:
+      cgroup: ''
+    lastmod: 1752979811526
+    uid: 7b2n71wR3k6gd8
+    behaviors: []
+    extendTypes: ''
+  - lastmod: 1752977878240
+    type: texture
+    name: PlaceholderPlayer
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 64
+    imgHeight: 64
+    width: 64
+    height: 64
+    offx: 0
+    offy: 0
+    origname: ig4GPz5DLthzgbw.png
+    shape: rect
+    left: 0
+    right: 64
+    top: 0
+    bottom: 64
+    uid: g4GPz5DLthzgbw
+    padding: 1
+    isBlank: false
+  - lastmod: 1752977969005
+    type: texture
+    name: PlaceholderBG
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 1280
+    imgHeight: 720
+    width: 1280
+    height: 720
+    offx: 0
+    offy: 0
+    origname: iR33143JGWdKQ1z.png
+    shape: rect
+    left: 0
+    right: 1280
+    top: 0
+    bottom: 720
+    uid: R33143JGWdKQ1z
+    padding: 1
+    isBlank: false
+    tiled: true
+globalVars: []
+settings:
+  authoring:
+    author: ''
+    site: ''
+    title: ''
+    version:
+      - 0
+      - 0
+      - 0
+    versionPostfix: ''
+    appId: ''
+  rendering:
+    usePixiLegacy: true
+    transparent: false
+    maxFPS: 60
+    pixelatedrender: false
+    highDensity: true
+    desktopMode: maximized
+    hideCursor: false
+    mobileScreenOrientation: unspecified
+    viewMode: scaleFit
+  export:
+    showErrors: true
+    errorsLink: ''
+    autocloseDesktop: true
+    windows: true
+    linux: true
+    mac: true
+    functionWrap: false
+    codeModifier: none
+    bundleAssetTree: false
+    bundleAssetTypes:
+      texture: true
+      template: true
+      room: true
+      behavior: false
+      typeface: false
+      sound: false
+      style: false
+      tandem: false
+      script: false
+      enum: false
+  branding:
+    accent: '#446adb'
+    invertPreloaderScheme: true
+    icon: -1
+    splashScreen: -1
+    forceSmoothIcons: false
+    forceSmoothSplashScreen: false
+    hideLoadingLogo: false
+    alternativeLogo: false
+    customLoadingText: ''
+  fps: 30
+palette: []
