@@ -300,12 +300,6 @@ assets:
     animationFPS: 30
     visible: true
     events:
-      - eventKey: OnStep
-        lib: core
-        code: |-
-          this.button.x = this.x;
-          this.button.y = this.y;
-        arguments: {}
       - eventKey: OnCreate
         code: |-
           this.button = vkeys.joystick({
@@ -327,7 +321,7 @@ assets:
         lib: core
     extends:
       cgroup: ''
-    lastmod: 1752982513067
+    lastmod: 1753062879406
     uid: RdTcmNcccdwhzj
     behaviors: []
     extendTypes: ''
@@ -366,13 +360,158 @@ assets:
         exts: {}
         customProperties: {}
         bindings: {}
+      - x: -448
+        'y': 512
+        opacity: 1
+        tint: 16777215
+        scale:
+          x: 1
+          'y': 1
+        rotation: 0
+        uid: KCRtp4jH6gWCf9
+        exts: {}
+        customProperties: {}
+        bindings: {}
     tiles: []
     extends: {}
-    lastmod: 1752981965850
+    lastmod: 1753050950434
     events: []
     behaviors: []
     extendTypes: ''
     uid: Hm5mWWC4mF8gqG
+  - lastmod: 1753050282455
+    type: texture
+    name: useLarge
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 86
+      - 86
+    marginx: 0
+    marginy: 0
+    imgWidth: 172
+    imgHeight: 172
+    width: 172
+    height: 172
+    offx: 0
+    offy: 0
+    origname: ipgCk1KnppK5CzM.png
+    shape: rect
+    left: 86
+    right: 86
+    top: 86
+    bottom: 86
+    uid: pgCk1KnppK5CzM
+    padding: 1
+    isBlank: false
+    source: >-
+      D:\Valentines2025\valentines2025\You Fight
+      Monsters\img\iD3mWdhkRzQ2cGK.png
+  - lastmod: 1753050251615
+    type: texture
+    name: useSmall
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 64
+      - 64
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: idKnhbchmqn8DrF.png
+    shape: rect
+    left: 64
+    right: 64
+    top: 64
+    bottom: 64
+    uid: dKnhbchmqn8DrF
+    padding: 1
+    isBlank: false
+    source: >-
+      D:\Valentines2025\valentines2025\You Fight
+      Monsters\img\idC191Dm4TRd8jK.png
+  - type: template
+    baseClass: AnimatedSprite
+    name: useButton
+    depth: 0
+    texture: pgCk1KnppK5CzM
+    playAnimationOnStart: false
+    loopAnimation: true
+    animationFPS: 30
+    visible: true
+    events:
+      - eventKey: OnStep
+        lib: core
+        code: |-
+          /*
+          this.button.x = this.x;
+          this.button.y = this.y;
+
+          if(actions.Use.down) {
+              this.beingPressed = true
+              console.log('collision is happening !! ', this.beingPressed);
+          }
+          else {
+              this.beingPressed = false
+              console.log('not being pressed: ', this.beingPressed);
+          }
+          */
+
+          if (actions.Use.down && !this.wasPressed) {
+              this.wasPressed = true;
+              this.beingPressed = true;
+              console.log('Button pressed!');
+          }
+          else if (!actions.Use.down && this.wasPressed) {
+              this.wasPressed = false;
+              this.beingPressed = false;
+              console.log('Button released!');
+          }
+        arguments: {}
+      - eventKey: OnCreate
+        code: |-
+          this.button = vkeys.button({
+              key: 'Vk1',
+              texNormal: 'useLarge',
+              texActive: 'useSmall',
+              x: camera.right - 170,
+              y: camera.bottom - 170,
+              depth: 100,
+              alpha: 0.9,
+              container: rooms.templates.UI_InGame,
+          });
+
+          //this.button.visible = false;
+          this.button.parent = this.parent;
+          this.beingPressed = false;
+
+          /*
+          this.button.onDown = () => {
+              this.beingPressed = true;
+              console.log('Use started');
+          };
+          this.button.onUp = () => {
+              this.beingPressed = false;
+              console.log('Use ended');
+          };
+          */
+        arguments: {}
+        lib: core
+    extends:
+      cgroup: ''
+    lastmod: 1753063994416
+    uid: KCRtp4jH6gWCf9
+    behaviors: []
+    extendTypes: ''
 globalVars: []
 settings:
   authoring:
