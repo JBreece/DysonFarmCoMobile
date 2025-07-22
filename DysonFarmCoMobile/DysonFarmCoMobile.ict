@@ -6,11 +6,25 @@ libs:
   place:
     gridX: 1024
     gridY: 1024
-  pointer: {}
+    debugMode: false
+    debugText: 0
+  pointer:
+    startlocked: false
   keyboard: {}
   keyboard.polyfill: {}
   pointer.polyfill: {}
   vkeys: {}
+  sprite:
+    spritedef: |-
+      sprite(
+          'Adventurer', 'Player_Idle',
+          [0]
+      );
+
+      sprite(
+          'Adventurer', 'Player_Run',
+          [10, 9]
+      );
 startroom: -1
 contentTypes: []
 actions:
@@ -62,7 +76,7 @@ assets:
     follow: -1
     backgrounds:
       - depth: 0
-        texture: R33143JGWdKQ1z
+        texture: CDHC8bpzMrMGgN
         shiftX: 0
         shiftY: 0
         parallaxX: 1
@@ -87,7 +101,7 @@ assets:
         bindings: {}
     tiles: []
     extends: {}
-    lastmod: 1752981270442
+    lastmod: 1753145734525
     events:
       - eventKey: OnRoomStart
         code: this.mainUi = rooms.append('UI_InGame');
@@ -100,15 +114,15 @@ assets:
     baseClass: AnimatedSprite
     name: Player
     depth: 0
-    texture: g4GPz5DLthzgbw
-    playAnimationOnStart: false
+    texture: dPQKkNjWBF84dC
+    playAnimationOnStart: true
     loopAnimation: true
-    animationFPS: 30
+    animationFPS: 10
     visible: true
     events:
       - eventKey: OnStep
         lib: core
-        code: |
+        code: |+
           // Set movement speed
           this.mySpeed = 3;
 
@@ -139,17 +153,9 @@ assets:
               this.facing = 'right';
           }
 
-
-          // Optional: animation switching
-          if (actions.MoveX.value !== 0 || actions.MoveY.value !== 0) {
-              //this.play('walk');
-          } else {
-              //this.play('idle');
-          }
         arguments: {}
       - eventKey: OnCreate
         code: |-
-          this.animationSpeed = 0.2;
           this.scale.x = 1;
           this.scale.y = 1;
           this.frameCounter = 0
@@ -167,11 +173,19 @@ assets:
               this.playerFacing = 'left'
           else if(this.scale.x === 1)
               this.playerFacing = 'right'
+
+
+          // Optional: animation switching
+          if (actions.MoveX.value !== 0 || actions.MoveY.value !== 0) {
+              this.tex = 'Player_Run'
+          } else {
+              this.tex = 'Player_Idle'
+          }
         arguments: {}
         lib: core
     extends:
       cgroup: ''
-    lastmod: 1752982690090
+    lastmod: 1753147632523
     uid: 7b2n71wR3k6gd8
     behaviors: []
     extendTypes: ''
@@ -452,20 +466,6 @@ assets:
       - eventKey: OnStep
         lib: core
         code: |-
-          /*
-          this.button.x = this.x;
-          this.button.y = this.y;
-
-          if(actions.Use.down) {
-              this.beingPressed = true
-              console.log('collision is happening !! ', this.beingPressed);
-          }
-          else {
-              this.beingPressed = false
-              console.log('not being pressed: ', this.beingPressed);
-          }
-          */
-
           if (actions.Use.down && !this.wasPressed) {
               this.wasPressed = true;
               this.beingPressed = true;
@@ -508,10 +508,4512 @@ assets:
         lib: core
     extends:
       cgroup: ''
-    lastmod: 1753063994416
+    lastmod: 1753069028636
     uid: KCRtp4jH6gWCf9
     behaviors: []
     extendTypes: ''
+  - lastmod: 1753069507392
+    type: texture
+    name: Arrow_Right
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 64
+    width: 128
+    height: 64
+    offx: 0
+    offy: 0
+    origname: i8TCPcw7r2fchM7.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 64
+    uid: 8TCPcw7r2fchM7
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Arrow_Right.png
+  - lastmod: 1753069507396
+    type: texture
+    name: Arrow_Left
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 64
+    width: 128
+    height: 64
+    offx: 0
+    offy: 0
+    origname: iFgpFt5JJbBnNdg.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 64
+    uid: FgpFt5JJbBnNdg
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Arrow_Left.png
+  - lastmod: 1753069507397
+    type: texture
+    name: Arrow_Down
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 64
+    width: 128
+    height: 64
+    offx: 0
+    offy: 0
+    origname: ihgH4kfGgmrcghD.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 64
+    uid: hgH4kfGgmrcghD
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Arrow_Down.png
+  - lastmod: 1753069507398
+    type: texture
+    name: Bar_Red
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 288
+    imgHeight: 68
+    width: 288
+    height: 68
+    offx: 0
+    offy: 0
+    origname: iPkRr64jMQ3DzmK.png
+    shape: rect
+    left: 0
+    right: 288
+    top: 0
+    bottom: 68
+    uid: PkRr64jMQ3DzmK
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Bar_Red.png
+  - lastmod: 1753069507398
+    type: texture
+    name: Arrow_Up
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 64
+    width: 128
+    height: 64
+    offx: 0
+    offy: 0
+    origname: it8rNcLpCwKccCc.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 64
+    uid: t8rNcLpCwKccCc
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Arrow_Up.png
+  - lastmod: 1753069507399
+    type: texture
+    name: Boulders
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iz5rGcjNBtgrqzh.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: z5rGcjNBtgrqzh
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Boulders.png
+  - lastmod: 1753069507461
+    type: texture
+    name: Onion
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: i1qQcCKFnQjTd5w.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: 1qQcCKFnQjTd5w
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Onion.png
+  - lastmod: 1753069507462
+    type: texture
+    name: Pig_Avatar
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: imrkLrdN9BpDwgP.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: mrkLrdN9BpDwgP
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Pig_Avatar.png
+  - lastmod: 1753069507462
+    type: texture
+    name: Pig_Dead
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: i1ML3HwLCff54zN.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: 1ML3HwLCff54zN
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Pig_Dead.png
+  - lastmod: 1753069507462
+    type: texture
+    name: Mouse_Right
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iHJ3HC2DpKK98mQ.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: HJ3HC2DpKK98mQ
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Mouse_Right.png
+  - lastmod: 1753069507466
+    type: texture
+    name: Pig_Right
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iRn129HhLnF2Fhz.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: Rn129HhLnF2Fhz
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Pig_Right.png
+  - lastmod: 1753069507467
+    type: texture
+    name: Pig_Down
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: i84w1dp56rpcCw1.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: 84w1dp56rpcCw1
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Pig_Down.png
+  - lastmod: 1753069507503
+    type: texture
+    name: UI_Toolbar_Bottom_Corner
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 320
+    imgHeight: 102
+    width: 320
+    height: 102
+    offx: 0
+    offy: 0
+    origname: ibRpdhwBrJfmtt5.png
+    shape: rect
+    left: 0
+    right: 320
+    top: 0
+    bottom: 102
+    uid: bRpdhwBrJfmtt5
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\UI_Toolbar_Bottom_Corner.png
+  - lastmod: 1753069507504
+    type: texture
+    name: UI_Toolbar_Bottom
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 320
+    imgHeight: 102
+    width: 320
+    height: 102
+    offx: 0
+    offy: 0
+    origname: iWCFrDt56fhdnHh.png
+    shape: rect
+    left: 0
+    right: 320
+    top: 0
+    bottom: 102
+    uid: WCFrDt56fhdnHh
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\UI_Toolbar_Bottom.png
+  - lastmod: 1753069507505
+    type: texture
+    name: Showel
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: ij1cfpkRDzm242j.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: j1cfpkRDzm242j
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Showel.png
+  - lastmod: 1753069507504
+    type: texture
+    name: WateringCan
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: ipwfkGPzmGJ53PR.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: pwfkGPzmGJ53PR
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\WateringCan.png
+  - lastmod: 1753069507507
+    type: texture
+    name: Tree
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 192
+    width: 128
+    height: 192
+    offx: 0
+    offy: 0
+    origname: i51j5N6gq9FkHbn.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 192
+    uid: 51j5N6gq9FkHbn
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Tree.png
+  - lastmod: 1753069507508
+    type: texture
+    name: UI_Toolbar_Top
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 320
+    imgHeight: 102
+    width: 320
+    height: 102
+    offx: 0
+    offy: 0
+    origname: icC92TJw359M5rh.png
+    shape: rect
+    left: 0
+    right: 320
+    top: 0
+    bottom: 102
+    uid: cC92TJw359M5rh
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\UI_Toolbar_Top.png
+  - lastmod: 1753069507502
+    type: texture
+    name: UI_Toolbar
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 320
+    imgHeight: 102
+    width: 320
+    height: 102
+    offx: 0
+    offy: 0
+    origname: i69jFt8BkCr15pG.png
+    shape: rect
+    left: 0
+    right: 320
+    top: 0
+    bottom: 102
+    uid: 69jFt8BkCr15pG
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\UI_Toolbar.png
+  - lastmod: 1753069507400
+    type: texture
+    name: Bar_Green
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 288
+    imgHeight: 68
+    width: 288
+    height: 68
+    offx: 0
+    offy: 0
+    origname: ijWf9HP6FrKktdr.png
+    shape: rect
+    left: 0
+    right: 288
+    top: 0
+    bottom: 68
+    uid: jWf9HP6FrKktdr
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Bar_Green.png
+  - lastmod: 1753069507501
+    type: texture
+    name: Tomato
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: i3wDmdrQgb1BLR5.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: 3wDmdrQgb1BLR5
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Tomato.png
+  - lastmod: 1753069507502
+    type: texture
+    name: UI_SquareFrame
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 160
+    imgHeight: 166
+    width: 160
+    height: 166
+    offx: 0
+    offy: 0
+    origname: iLD67hzgb6nwKrd.png
+    shape: rect
+    left: 0
+    right: 160
+    top: 0
+    bottom: 166
+    uid: LD67hzgb6nwKrd
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\UI_SquareFrame.png
+  - lastmod: 1753069507501
+    type: texture
+    name: Ramp_Right_Tileset
+    untill: 0
+    grid:
+      - 2
+      - 3
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 256
+    imgHeight: 288
+    width: 128
+    height: 96
+    offx: 0
+    offy: 0
+    origname: iHKB6z6GBb6511G.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 96
+    uid: HKB6z6GBb6511G
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Ramp_Right_Tileset_2x3.png
+  - lastmod: 1753069507401
+    type: texture
+    name: BeachBall
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: idH2ztrtRFWL628.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: dH2ztrtRFWL628
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\BeachBall.png
+  - lastmod: 1753069507402
+    type: texture
+    name: Bar_Blue
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 288
+    imgHeight: 68
+    width: 288
+    height: 68
+    offx: 0
+    offy: 0
+    origname: iDTp2CLhKF47n9R.png
+    shape: rect
+    left: 0
+    right: 288
+    top: 0
+    bottom: 68
+    uid: DTp2CLhKF47n9R
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Bar_Blue.png
+  - lastmod: 1753069507500
+    type: texture
+    name: UI_CircledFrame
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 160
+    imgHeight: 166
+    width: 160
+    height: 166
+    offx: 0
+    offy: 0
+    origname: inJfb48cBDtKCQh.png
+    shape: rect
+    left: 0
+    right: 160
+    top: 0
+    bottom: 166
+    uid: nJfb48cBDtKCQh
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\UI_CircledFrame.png
+  - lastmod: 1753069507402
+    type: texture
+    name: Box
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: ikmCt4nTP1RM4h5.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: kmCt4nTP1RM4h5
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Box.png
+  - lastmod: 1753069507500
+    type: texture
+    name: Water_Shore_Dark
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 96
+    width: 128
+    height: 96
+    offx: 0
+    offy: 0
+    origname: iL8Kz2Phr7MQddH.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 96
+    uid: L8Kz2Phr7MQddH
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Water_Shore_Dark.png
+  - lastmod: 1753069507403
+    type: texture
+    name: Bg
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 256
+    imgHeight: 256
+    width: 256
+    height: 256
+    offx: 0
+    offy: 0
+    origname: iC32gd37zjDtmgd.png
+    shape: rect
+    left: 0
+    right: 256
+    top: 0
+    bottom: 256
+    uid: C32gd37zjDtmgd
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Bg.png
+  - lastmod: 1753069507404
+    type: texture
+    name: Bomb
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iRHQ1j3JdHgcmmD.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: RHQ1j3JdHgcmmD
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Bomb.png
+  - lastmod: 1753069507405
+    type: texture
+    name: Bush
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: i3KJ6GcKzWqcCBz.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: 3KJ6GcKzWqcCBz
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Bush.png
+  - lastmod: 1753069507406
+    type: texture
+    name: Bridge
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 90
+    width: 128
+    height: 90
+    offx: 0
+    offy: 0
+    origname: i5fMHncdL6tdQH3.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 90
+    uid: 5fMHncdL6tdQH3
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Bridge.png
+  - lastmod: 1753069507407
+    type: texture
+    name: Cat_Avatar
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: i1hmhtFKFJ9P544.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: 1hmhtFKFJ9P544
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Cat_Avatar.png
+  - lastmod: 1753069507408
+    type: texture
+    name: Carrot
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iNwDjw1B8CtLJPp.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: NwDjw1B8CtLJPp
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Carrot.png
+  - lastmod: 1753069507408
+    type: texture
+    name: Cat_Dead
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iQ753bmDRHrcFJT.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: Q753bmDRHrcFJT
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Cat_Dead.png
+  - lastmod: 1753069507409
+    type: texture
+    name: Cat_Avatar_Circle
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iL1R4wbw4TQMJQQ.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: L1R4wbw4TQMJQQ
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Cat_Avatar_Circle.png
+  - lastmod: 1753069507410
+    type: texture
+    name: ButtonTemplate
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 480
+    imgHeight: 134
+    width: 480
+    height: 134
+    offx: 0
+    offy: 0
+    origname: ib3W8tcpKWhNfwd.png
+    shape: rect
+    left: 0
+    right: 480
+    top: 0
+    bottom: 134
+    uid: b3W8tcpKWhNfwd
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\ButtonTemplate.png
+  - lastmod: 1753069507410
+    type: texture
+    name: Cat_Avatar_Rounded
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: ifB6qJzFrLtnbw4.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: fB6qJzFrLtnbw4
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Cat_Avatar_Rounded.png
+  - lastmod: 1753069507410
+    type: texture
+    name: Cat_Right
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iT8KLrBk324Tpb2.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: T8KLrBk324Tpb2
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Cat_Right.png
+  - lastmod: 1753069507411
+    type: texture
+    name: Cat_Left
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iTC429r4c5QG8C2.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: TC429r4c5QG8C2
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Cat_Left.png
+  - lastmod: 1753069507412
+    type: texture
+    name: Cat_Down
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iHnkghWJRP8G366.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: HnkghWJRP8G366
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Cat_Down.png
+  - lastmod: 1753069507413
+    type: texture
+    name: Beetroot
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: i9KWw6KHbmm994k.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: 9KWw6KHbmm994k
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Beetroot.png
+  - lastmod: 1753069507499
+    type: texture
+    name: Water_Shadowed
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 80
+    width: 128
+    height: 80
+    offx: 0
+    offy: 0
+    origname: iRwq4HtmP4bDk5W.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 80
+    uid: Rwq4HtmP4bDk5W
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Water_Shadowed.png
+  - lastmod: 1753069507498
+    type: texture
+    name: Water
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 80
+    width: 128
+    height: 80
+    offx: 0
+    offy: 0
+    origname: i4JL4W76WDtLLK2.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 80
+    uid: 4JL4W76WDtLLK2
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Water.png
+  - lastmod: 1753069507497
+    type: texture
+    name: UI_Toolbar_Top_Corner
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 320
+    imgHeight: 102
+    width: 320
+    height: 102
+    offx: 0
+    offy: 0
+    origname: i8k4gDp8M7ktjC9.png
+    shape: rect
+    left: 0
+    right: 320
+    top: 0
+    bottom: 102
+    uid: 8k4gDp8M7ktjC9
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\UI_Toolbar_Top_Corner.png
+  - lastmod: 1753069507497
+    type: texture
+    name: Ramp_Down_Tileset
+    untill: 0
+    grid:
+      - 2
+      - 3
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 256
+    imgHeight: 288
+    width: 128
+    height: 96
+    offx: 0
+    offy: 0
+    origname: ibGcHrKBFfBG4wq.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 96
+    uid: bGcHrKBFfBG4wq
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Ramp_Down_Tileset_2x3.png
+  - lastmod: 1753069507496
+    type: texture
+    name: Soil
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 32
+    width: 128
+    height: 32
+    offx: 0
+    offy: 0
+    origname: ip9CkDjPQHd28mw.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 32
+    uid: p9CkDjPQHd28mw
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Soil.png
+  - lastmod: 1753069507496
+    type: texture
+    name: Status_Thirsty
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 81
+    imgHeight: 67
+    width: 81
+    height: 67
+    offx: 0
+    offy: 0
+    origname: ifC6FqWCPLWz6qR.png
+    shape: rect
+    left: 0
+    right: 81
+    top: 0
+    bottom: 67
+    uid: fC6FqWCPLWz6qR
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Status_Thirsty.png
+  - lastmod: 1753069507493
+    type: texture
+    name: Soil_Texture
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 256
+    imgHeight: 64
+    width: 256
+    height: 64
+    offx: 0
+    offy: 0
+    origname: i3BFW2p1KRCRLcR.png
+    shape: rect
+    left: 0
+    right: 256
+    top: 0
+    bottom: 64
+    uid: 3BFW2p1KRCRLcR
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Soil_Texture.png
+  - lastmod: 1753069507492
+    type: texture
+    name: Status_Exclamation
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 81
+    imgHeight: 67
+    width: 81
+    height: 67
+    offx: 0
+    offy: 0
+    origname: iwmzpRrnfNhGwL1.png
+    shape: rect
+    left: 0
+    right: 81
+    top: 0
+    bottom: 67
+    uid: wmzpRrnfNhGwL1
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Status_Exclamation.png
+  - lastmod: 1753069507492
+    type: texture
+    name: Status_Starving
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 81
+    imgHeight: 67
+    width: 81
+    height: 67
+    offx: 0
+    offy: 0
+    origname: izrWD6FfQpHNjKg.png
+    shape: rect
+    left: 0
+    right: 81
+    top: 0
+    bottom: 67
+    uid: zrWD6FfQpHNjKg
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Status_Starving.png
+  - lastmod: 1753069507491
+    type: texture
+    name: Status_Angry
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 81
+    imgHeight: 67
+    width: 81
+    height: 67
+    offx: 0
+    offy: 0
+    origname: ijcT3Cdt8qh58N1.png
+    shape: rect
+    left: 0
+    right: 81
+    top: 0
+    bottom: 67
+    uid: jcT3Cdt8qh58N1
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Status_Angry.png
+  - lastmod: 1753069507490
+    type: texture
+    name: Status_Happy
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 81
+    imgHeight: 67
+    width: 81
+    height: 67
+    offx: 0
+    offy: 0
+    origname: ijBr8mfMcjrwLM7.png
+    shape: rect
+    left: 0
+    right: 81
+    top: 0
+    bottom: 67
+    uid: jBr8mfMcjrwLM7
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Status_Happy.png
+  - lastmod: 1753069507489
+    type: texture
+    name: Status_Love
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 81
+    imgHeight: 67
+    width: 81
+    height: 67
+    offx: 0
+    offy: 0
+    origname: imQLkChW2fPqfpd.png
+    shape: rect
+    left: 0
+    right: 81
+    top: 0
+    bottom: 67
+    uid: mQLkChW2fPqfpd
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Status_Love.png
+  - lastmod: 1753069507489
+    type: texture
+    name: Spikes
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: i88DJg68J8j57wN.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: 88DJg68J8j57wN
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Spikes.png
+  - lastmod: 1753069507489
+    type: texture
+    name: Spikes_Active
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iL47rFNjdzz1m1p.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: L47rFNjdzz1m1p
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Spikes_Active.png
+  - lastmod: 1753069507488
+    type: texture
+    name: Soil_Dark
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 32
+    width: 128
+    height: 32
+    offx: 0
+    offy: 0
+    origname: iMptpbc4515pR99.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 32
+    uid: Mptpbc4515pR99
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Soil_Dark.png
+  - lastmod: 1753069507485
+    type: texture
+    name: Pig_Left
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iMGNTWKMnLq3hFm.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: MGNTWKMnLq3hFm
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Pig_Left.png
+  - lastmod: 1753069507485
+    type: texture
+    name: Shadow_Right
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 8
+    imgHeight: 64
+    width: 8
+    height: 64
+    offx: 0
+    offy: 0
+    origname: ihKRdrg85w3TB4L.png
+    shape: rect
+    left: 0
+    right: 8
+    top: 0
+    bottom: 64
+    uid: hKRdrg85w3TB4L
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Shadow_Right.png
+  - lastmod: 1753069507484
+    type: texture
+    name: Shadow_Corner_Left
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 8
+    imgHeight: 96
+    width: 8
+    height: 96
+    offx: 0
+    offy: 0
+    origname: ipRmffL6L2RJWnj.png
+    shape: rect
+    left: 0
+    right: 8
+    top: 0
+    bottom: 96
+    uid: pRmffL6L2RJWnj
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Shadow_Corner_Left.png
+  - lastmod: 1753069507484
+    type: texture
+    name: Ruby
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iKmCnHLbFQW3jkw.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: KmCnHLbFQW3jkw
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Ruby.png
+  - lastmod: 1753069507483
+    type: texture
+    name: Shadow_Corner_Up
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 8
+    imgHeight: 32
+    width: 8
+    height: 32
+    offx: 0
+    offy: 0
+    origname: inQRQHNFfmrP5KP.png
+    shape: rect
+    left: 0
+    right: 8
+    top: 0
+    bottom: 32
+    uid: nQRQHNFfmrP5KP
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Shadow_Corner_Up.png
+  - lastmod: 1753069507482
+    type: texture
+    name: Shadow_Corner_Down
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 8
+    imgHeight: 64
+    width: 8
+    height: 64
+    offx: 0
+    offy: 0
+    origname: i4DDmhbPq88Bm2N.png
+    shape: rect
+    left: 0
+    right: 8
+    top: 0
+    bottom: 64
+    uid: 4DDmhbPq88Bm2N
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Shadow_Corner_Down.png
+  - lastmod: 1753069507481
+    type: texture
+    name: Ramp_Left_Tileset
+    untill: 0
+    grid:
+      - 2
+      - 3
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 256
+    imgHeight: 288
+    width: 128
+    height: 96
+    offx: 0
+    offy: 0
+    origname: igNH3WzDFQzjwWf.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 96
+    uid: gNH3WzDFQzjwWf
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Ramp_Left_Tileset_2x3.png
+  - lastmod: 1753069507480
+    type: texture
+    name: Ramp_Up_Tileset
+    untill: 0
+    grid:
+      - 2
+      - 3
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 256
+    imgHeight: 192
+    width: 128
+    height: 64
+    offx: 0
+    offy: 0
+    origname: ifLrRjrcrMMqGDT.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 64
+    uid: fLrRjrcrMMqGDT
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Ramp_Up_Tileset_2x3.png
+  - lastmod: 1753069507479
+    type: texture
+    name: Radish
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iH1QMw4G4QtnhHH.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: H1QMw4G4QtnhHH
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Radish.png
+  - lastmod: 1753069507475
+    type: texture
+    name: Rabbit_Up
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: i1C7jJpTt66fWnF.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: 1C7jJpTt66fWnF
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Rabbit_Up.png
+  - lastmod: 1753069507475
+    type: texture
+    name: RadioactiveBarrel
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: i6jBmzJjbn2tpCW.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: 6jBmzJjbn2tpCW
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\RadioactiveBarrel.png
+  - lastmod: 1753069507474
+    type: texture
+    name: Rabbit_Avatar_Circle
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iqdwbTB3bdgfpNp.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: qdwbTB3bdgfpNp
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Rabbit_Avatar_Circle.png
+  - lastmod: 1753069507474
+    type: texture
+    name: Rabbit_Right
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: ir72LCfw5C2mLd9.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: r72LCfw5C2mLd9
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Rabbit_Right.png
+  - lastmod: 1753069507473
+    type: texture
+    name: Rabbit_Down
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iN8TDddqdfgkt5F.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: N8TDddqdfgkt5F
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Rabbit_Down.png
+  - lastmod: 1753069507472
+    type: texture
+    name: Rabbit_Left
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: irj8GCTb6TKMjM2.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: rj8GCTb6TKMjM2
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Rabbit_Left.png
+  - lastmod: 1753069507471
+    type: texture
+    name: Rabbit_Avatar_Rounded
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iPB2JC3c7gN6nq3.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: PB2JC3c7gN6nq3
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Rabbit_Avatar_Rounded.png
+  - lastmod: 1753069507471
+    type: texture
+    name: Rabbit_Dead
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: ig4bH6NM5Ngmrk2.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: g4bH6NM5Ngmrk2
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Rabbit_Dead.png
+  - lastmod: 1753069507470
+    type: texture
+    name: Rabbit_Avatar
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: izBtPnhr5Trdgr6.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: zBtPnhr5Trdgr6
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Rabbit_Avatar.png
+  - lastmod: 1753069507469
+    type: texture
+    name: Pig_Up
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: ic735jMjCkTzcKt.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: c735jMjCkTzcKt
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Pig_Up.png
+  - lastmod: 1753069507460
+    type: texture
+    name: Pig_Avatar_Rounded
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: ir3zhQtq1j7FrPT.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: r3zhQtq1j7FrPT
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Pig_Avatar_Rounded.png
+  - lastmod: 1753069507460
+    type: texture
+    name: Mouse_Down
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iCwfDt2DkL1cNqd.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: CwfDt2DkL1cNqd
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Mouse_Down.png
+  - lastmod: 1753069507460
+    type: texture
+    name: Pig_Avatar_Circle
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: i7rK81Wz6q8bq7Q.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: 7rK81Wz6q8bq7Q
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Pig_Avatar_Circle.png
+  - lastmod: 1753069507459
+    type: texture
+    name: Mouse_Up
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: inCk7T7P92Tnzmw.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: nCk7T7P92Tnzmw
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Mouse_Up.png
+  - lastmod: 1753069507459
+    type: texture
+    name: Mouse_Left
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: ifH786tkF2J9zQf.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: fH786tkF2J9zQf
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Mouse_Left.png
+  - lastmod: 1753069507458
+    type: texture
+    name: Mouse_Dead
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iF11JPkm6D5PGhP.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: F11JPkm6D5PGhP
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Mouse_Dead.png
+  - lastmod: 1753069507458
+    type: texture
+    name: Grass_Dark
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 96
+    width: 128
+    height: 96
+    offx: 0
+    offy: 0
+    origname: iN392nph98HD143.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 96
+    uid: N392nph98HD143
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Grass_Dark.png
+  - lastmod: 1753069507458
+    type: texture
+    name: Mouse_Avatar_Rounded
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iQLfw97gQ6KC2Dd.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: QLfw97gQ6KC2Dd
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Mouse_Avatar_Rounded.png
+  - lastmod: 1753069507457
+    type: texture
+    name: Key_Golden
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: i5kBzCt4TbjGWGN.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: 5kBzCt4TbjGWGN
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Key_Golden.png
+  - lastmod: 1753069507457
+    type: texture
+    name: Mouse_Avatar
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: ik7Lpm6jD4mJjrW.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: k7Lpm6jD4mJjrW
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Mouse_Avatar.png
+  - lastmod: 1753069507456
+    type: texture
+    name: Mouse_Avatar_Circle
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: ic8hqP5ghcmN3zK.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: c8hqP5ghcmN3zK
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Mouse_Avatar_Circle.png
+  - lastmod: 1753069507455
+    type: texture
+    name: Ice_03
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 64
+    width: 128
+    height: 64
+    offx: 0
+    offy: 0
+    origname: iJWbL4Gcq1hGb4C.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 64
+    uid: JWbL4Gcq1hGb4C
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Ice_03.png
+  - lastmod: 1753069507454
+    type: texture
+    name: Key_Silver
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iRFrK6BW81WrDBL.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: RFrK6BW81WrDBL
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Key_Silver.png
+  - lastmod: 1753069507454
+    type: texture
+    name: Hole
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 64
+    width: 128
+    height: 64
+    offx: 0
+    offy: 0
+    origname: itDLnrt2PmGg5NH.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 64
+    uid: tDLnrt2PmGg5NH
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Hole.png
+  - lastmod: 1753069507453
+    type: texture
+    name: Ice_01
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 64
+    width: 128
+    height: 64
+    offx: 0
+    offy: 0
+    origname: iGGLJN28FGWT32K.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 64
+    uid: GGLJN28FGWT32K
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Ice_01.png
+  - lastmod: 1753069713970
+    type: texture
+    name: Grass_Texture
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 128
+      - 64
+    marginx: 0
+    marginy: 0
+    imgWidth: 256
+    imgHeight: 128
+    width: 256
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iCDHC8bpzMrMGgN.png
+    shape: rect
+    left: 128
+    right: 128
+    top: 64
+    bottom: 64
+    uid: CDHC8bpzMrMGgN
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Grass_Texture.png
+    tiled: true
+  - lastmod: 1753069507453
+    type: texture
+    name: Hedge
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iC38HP95bTqJ1qB.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: C38HP95bTqJ1qB
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Hedge.png
+  - lastmod: 1753069507452
+    type: texture
+    name: Ice_02
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 64
+    width: 128
+    height: 64
+    offx: 0
+    offy: 0
+    origname: if4tdhcDBzr2q4Q.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 64
+    uid: f4tdhcDBzr2q4Q
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Ice_02.png
+  - lastmod: 1753069507452
+    type: texture
+    name: Hedge_Roses
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iD5M58Bw8bBNTbC.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: D5M58Bw8bBNTbC
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Hedge_Roses.png
+  - lastmod: 1753069507451
+    type: texture
+    name: Ground_Tileset
+    untill: 0
+    grid:
+      - 2
+      - 4
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 256
+    imgHeight: 384
+    width: 128
+    height: 96
+    offx: 0
+    offy: 0
+    origname: idG47nLdwcHGM77.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 96
+    uid: dG47nLdwcHGM77
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Ground_Tileset_2x4.png
+  - lastmod: 1753069507451
+    type: texture
+    name: Grass_Light
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 96
+    width: 128
+    height: 96
+    offx: 0
+    offy: 0
+    origname: iq3JM6mdgb6qKT8.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 96
+    uid: q3JM6mdgb6qKT8
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Grass_Light.png
+  - lastmod: 1753069507451
+    type: texture
+    name: GardenBed_Beetroot_02
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iCRCrbKk6LRjFMW.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: CRCrbKk6LRjFMW
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\GardenBed_Beetroot_02.png
+  - lastmod: 1753069507450
+    type: texture
+    name: Goo_03
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 64
+    width: 128
+    height: 64
+    offx: 0
+    offy: 0
+    origname: iTw2J9KDrLTdwtM.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 64
+    uid: Tw2J9KDrLTdwtM
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Goo_03.png
+  - lastmod: 1753069507450
+    type: texture
+    name: Goo_01
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 64
+    width: 128
+    height: 64
+    offx: 0
+    offy: 0
+    origname: igqTFWPHK7h23PH.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 64
+    uid: gqTFWPHK7h23PH
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Goo_01.png
+  - lastmod: 1753069507449
+    type: texture
+    name: GardenBed_Tomatoes_02
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iBhcD3L8pqPNhRb.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: BhcD3L8pqPNhRb
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\GardenBed_Tomatoes_02.png
+  - lastmod: 1753069507449
+    type: texture
+    name: Goo_02
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 64
+    width: 128
+    height: 64
+    offx: 0
+    offy: 0
+    origname: irG2B7c3MFMnJc9.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 64
+    uid: rG2B7c3MFMnJc9
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Goo_02.png
+  - lastmod: 1753069507448
+    type: texture
+    name: Goo_04
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 64
+    width: 128
+    height: 64
+    offx: 0
+    offy: 0
+    origname: iD7n3CqrDm2M3Dc.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 64
+    uid: D7n3CqrDm2M3Dc
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Goo_04.png
+  - lastmod: 1753069507441
+    type: texture
+    name: GardenBed_Radish_01
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iMM1NQz5g5cdL1T.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: MM1NQz5g5cdL1T
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\GardenBed_Radish_01.png
+  - lastmod: 1753069507441
+    type: texture
+    name: GardenBed_Radish_02
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: i6HC2qqFbk6wfF2.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: 6HC2qqFbk6wfF2
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\GardenBed_Radish_02.png
+  - lastmod: 1753069507440
+    type: texture
+    name: GardenBed_Tomatoes_01
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iB2GKgzR61Pd9Jr.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: B2GKgzR61Pd9Jr
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\GardenBed_Tomatoes_01.png
+  - lastmod: 1753069507440
+    type: texture
+    name: GardenBed_Cucumbers_02
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: inQCGcLFL5nF21g.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: nQCGcLFL5nF21g
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\GardenBed_Cucumbers_02.png
+  - lastmod: 1753069507440
+    type: texture
+    name: GardenBed_Onions_02
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: i26TqpcbnbchjjL.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: 26TqpcbnbchjjL
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\GardenBed_Onions_02.png
+  - lastmod: 1753069507439
+    type: texture
+    name: Cloud_01
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 462
+    imgHeight: 347
+    width: 462
+    height: 347
+    offx: 0
+    offy: 0
+    origname: if6FrFJDpRkhcm3.png
+    shape: rect
+    left: 0
+    right: 462
+    top: 0
+    bottom: 347
+    uid: f6FrFJDpRkhcm3
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Cloud_01.png
+  - lastmod: 1753069507439
+    type: texture
+    name: GardenBed_Blank
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iGmnj5BNnRJP3rh.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: Gmnj5BNnRJP3rh
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\GardenBed_Blank.png
+  - lastmod: 1753069507438
+    type: texture
+    name: GardenBed_Cucumbers_01
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: im4cR53TCwTbqqD.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: m4cR53TCwTbqqD
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\GardenBed_Cucumbers_01.png
+  - lastmod: 1753069507438
+    type: texture
+    name: GardenBed_Onions_01
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: ijHbF2FGkzPbgnz.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: jHbF2FGkzPbgnz
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\GardenBed_Onions_01.png
+  - lastmod: 1753069507438
+    type: texture
+    name: GardenBed_Carrots_01
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: icH5Trn1qNP81PP.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: cH5Trn1qNP81PP
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\GardenBed_Carrots_01.png
+  - lastmod: 1753069507437
+    type: texture
+    name: GardenBed_Carrots_02
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: ifpHkj9BMnH9cJL.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: fpHkj9BMnH9cJL
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\GardenBed_Carrots_02.png
+  - lastmod: 1753069507437
+    type: texture
+    name: Fox_Right
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: ibKT9KrHtKH5Pqw.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: bKT9KrHtKH5Pqw
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Fox_Right.png
+  - lastmod: 1753069507436
+    type: texture
+    name: GardenBed_Beetroot_01
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iWtkQpFnz2KQ2dH.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: WtkQpFnz2KQ2dH
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\GardenBed_Beetroot_01.png
+  - lastmod: 1753069507436
+    type: texture
+    name: Fox_Up
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iW2c843zPbgF3Dm.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: W2c843zPbgF3Dm
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Fox_Up.png
+  - lastmod: 1753069507435
+    type: texture
+    name: Fox_Down
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: i1F2Pn2PJQBJBfH.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: 1F2Pn2PJQBJBfH
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Fox_Down.png
+  - lastmod: 1753069507435
+    type: texture
+    name: Fox_Left
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iJTCH9FBRptQjWk.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: JTCH9FBRptQjWk
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Fox_Left.png
+  - lastmod: 1753069507434
+    type: texture
+    name: Fox_Dead
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iL29w3DgR7Q2G9H.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: L29w3DgR7Q2G9H
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Fox_Dead.png
+  - lastmod: 1753069507434
+    type: texture
+    name: Danger_Deadly
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iBb16MqwdhcDdf4.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: Bb16MqwdhcDdf4
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Danger_Deadly.png
+  - lastmod: 1753069507434
+    type: texture
+    name: Fox_Avatar_Rounded
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: icJbtkjNjB24kCN.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: cJbtkjNjB24kCN
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Fox_Avatar_Rounded.png
+  - lastmod: 1753069507433
+    type: texture
+    name: Fox_Avatar_Circle
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: i3wqDFWPdk7GFWH.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: 3wqDFWPdk7GFWH
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Fox_Avatar_Circle.png
+  - lastmod: 1753069507432
+    type: texture
+    name: Chick_Down
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iC4gmd51J4d6RQD.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: C4gmd51J4d6RQD
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Chick_Down.png
+  - lastmod: 1753069507431
+    type: texture
+    name: Cloud_03
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 520
+    imgHeight: 337
+    width: 520
+    height: 337
+    offx: 0
+    offy: 0
+    origname: iLbF4nc5NGkj2mP.png
+    shape: rect
+    left: 0
+    right: 520
+    top: 0
+    bottom: 337
+    uid: LbF4nc5NGkj2mP
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Cloud_03.png
+  - lastmod: 1753069507431
+    type: texture
+    name: Cursor_Point
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 134
+    width: 128
+    height: 134
+    offx: 0
+    offy: 0
+    origname: iGd9C3g6FRKqht4.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 134
+    uid: Gd9C3g6FRKqht4
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Cursor_Point.png
+  - lastmod: 1753069507430
+    type: texture
+    name: Fox_Avatar
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: ifRL7fbcCpFht8q.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: fRL7fbcCpFht8q
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Fox_Avatar.png
+  - lastmod: 1753069507429
+    type: texture
+    name: Chick_Left
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: i37k1r784CTKBzk.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: 37k1r784CTKBzk
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Chick_Left.png
+  - lastmod: 1753069507428
+    type: texture
+    name: Flag
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iBzhDMjw48JqddL.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: BzhDMjw48JqddL
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Flag.png
+  - lastmod: 1753069507427
+    type: texture
+    name: Fences_Tileset
+    untill: 0
+    grid:
+      - 4
+      - 4
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 512
+    imgHeight: 538
+    width: 128
+    height: 134.5
+    offx: 0
+    offy: 0
+    origname: it4knzp9nFn8pKm.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 134.5
+    uid: t4knzp9nFn8pKm
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Fences_Tileset_4x4.png
+  - lastmod: 1753069507427
+    type: texture
+    name: Fountain
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: i4B8tPQMJ7mm4Jm.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: 4B8tPQMJ7mm4Jm
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Fountain.png
+  - lastmod: 1753069507426
+    type: texture
+    name: Door_Golden
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 160
+    width: 128
+    height: 160
+    offx: 0
+    offy: 0
+    origname: i7NcjhpBr28RQdq.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 160
+    uid: 7NcjhpBr28RQdq
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Door_Golden.png
+  - lastmod: 1753069507425
+    type: texture
+    name: Danger_Water
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: i5wnmt11wjNb5Lk.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: 5wnmt11wjNb5Lk
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Danger_Water.png
+  - lastmod: 1753069507424
+    type: texture
+    name: Door_Silver
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 160
+    width: 128
+    height: 160
+    offx: 0
+    offy: 0
+    origname: iDbgrHRqJ3cFt87.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 160
+    uid: DbgrHRqJ3cFt87
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Door_Silver.png
+  - lastmod: 1753069507423
+    type: texture
+    name: Danger_Warning
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: ip38Kbw4fRngNb5.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: p38Kbw4fRngNb5
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Danger_Warning.png
+  - lastmod: 1753069507422
+    type: texture
+    name: Cursor_Grab
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: ib2hMm2c7BT7z7W.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: b2hMm2c7BT7z7W
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Cursor_Grab.png
+  - lastmod: 1753069507422
+    type: texture
+    name: Crystal
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: ijh8gWdDqBrjGg7.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: jh8gWdDqBrjGg7
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Crystal.png
+  - lastmod: 1753069507420
+    type: texture
+    name: Cucumber
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iRC4739tm3ng3fp.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: RC4739tm3ng3fp
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Cucumber.png
+  - lastmod: 1753069507420
+    type: texture
+    name: Chick_Avatar_Circle
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iLQpm99GGFW71Hm.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: LQpm99GGFW71Hm
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Chick_Avatar_Circle.png
+  - lastmod: 1753069507420
+    type: texture
+    name: Coin
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: i575j7GmhQmBFM1.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: 575j7GmhQmBFM1
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Coin.png
+  - lastmod: 1753069507418
+    type: texture
+    name: Cloud_04
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 472
+    imgHeight: 273
+    width: 472
+    height: 273
+    offx: 0
+    offy: 0
+    origname: i7rRLg9dR8NWgGW.png
+    shape: rect
+    left: 0
+    right: 472
+    top: 0
+    bottom: 273
+    uid: 7rRLg9dR8NWgGW
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Cloud_04.png
+  - lastmod: 1753069507418
+    type: texture
+    name: Cloud_02
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 460
+    imgHeight: 303
+    width: 460
+    height: 303
+    offx: 0
+    offy: 0
+    origname: iBftR6pBJLmW39n.png
+    shape: rect
+    left: 0
+    right: 460
+    top: 0
+    bottom: 303
+    uid: BftR6pBJLmW39n
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Cloud_02.png
+  - lastmod: 1753069507417
+    type: texture
+    name: Cloud_05
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 482
+    imgHeight: 287
+    width: 482
+    height: 287
+    offx: 0
+    offy: 0
+    origname: i5Nh1mHGQBN8TTD.png
+    shape: rect
+    left: 0
+    right: 482
+    top: 0
+    bottom: 287
+    uid: 5Nh1mHGQBN8TTD
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Cloud_05.png
+  - lastmod: 1753069507417
+    type: texture
+    name: Chick_Up
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iTQjqwPMgdmQf45.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: TQjqwPMgdmQf45
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Chick_Up.png
+  - lastmod: 1753069507416
+    type: texture
+    name: Chick_Dead
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iz56qmbC1NGtgr1.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: z56qmbC1NGtgr1
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Chick_Dead.png
+  - lastmod: 1753069507415
+    type: texture
+    name: Chick_Right
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: iCM5rB61zNKr1h5.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: CM5rB61zNKr1h5
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Chick_Right.png
+  - lastmod: 1753069507415
+    type: texture
+    name: Chick_Avatar_Rounded
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: ihT4TgpWhB6JKb4.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: hT4TgpWhB6JKb4
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Chick_Avatar_Rounded.png
+  - lastmod: 1753069507414
+    type: texture
+    name: Cat_Up
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: i8JbRt7JPGR9Cgb.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: 8JbRt7JPGR9Cgb
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Cat_Up.png
+  - lastmod: 1753069507413
+    type: texture
+    name: Chick_Avatar
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 0
+      - 0
+    marginx: 0
+    marginy: 0
+    imgWidth: 128
+    imgHeight: 128
+    width: 128
+    height: 128
+    offx: 0
+    offy: 0
+    origname: ijch5MHN1Nnn8TK.png
+    shape: rect
+    left: 0
+    right: 128
+    top: 0
+    bottom: 128
+    uid: jch5MHN1Nnn8TK
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
+      Animals, Farm, and Puzzle sprites\Chick_Avatar.png
+  - lastmod: 1753147659177
+    type: texture
+    name: Adventurer
+    untill: 0
+    grid:
+      - 9
+      - 3
+    axis:
+      - 40
+      - 55
+    marginx: 0
+    marginy: 0
+    imgWidth: 720
+    imgHeight: 330
+    width: 80
+    height: 110
+    offx: 0
+    offy: 0
+    origname: idPQKkNjWBF84dC.png
+    shape: rect
+    left: 40
+    right: 40
+    top: 55
+    bottom: 55
+    uid: dPQKkNjWBF84dC
+    padding: 1
+    isBlank: false
+    source: >-
+      C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Kenney's
+      Platformer Characters\Adventurer_9x3.png
+    tiled: false
 globalVars: []
 settings:
   authoring:
