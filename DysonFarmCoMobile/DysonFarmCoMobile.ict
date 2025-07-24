@@ -101,10 +101,25 @@ assets:
         bindings: {}
     tiles: []
     extends: {}
-    lastmod: 1753145734525
+    lastmod: 1753319002603
     events:
       - eventKey: OnRoomStart
-        code: this.mainUi = rooms.append('UI_InGame');
+        code: >-
+          this.mainUi = rooms.append('UI_InGame');
+
+
+          const tileSize = 64;
+
+          const gridWidth = Math.floor(camera.width / tileSize) + 1; // +1
+          needed to make room grid setting slightly larger than room grid
+          retrieval for safety
+
+          const gridHeight = Math.floor(camera.height / tileSize) + 1;
+
+
+          this.grid = Array(gridHeight).fill(null).map(() =>
+              Array(gridWidth).fill(null)
+          );
         arguments: {}
         lib: core
     behaviors: []
@@ -122,7 +137,7 @@ assets:
     events:
       - eventKey: OnStep
         lib: core
-        code: |+
+        code: |-
           // Set movement speed
           this.mySpeed = 3;
 
@@ -152,7 +167,6 @@ assets:
               this.scale.x = 1;
               this.facing = 'right';
           }
-
         arguments: {}
       - eventKey: OnCreate
         code: |-
@@ -185,7 +199,7 @@ assets:
         lib: core
     extends:
       cgroup: ''
-    lastmod: 1753147632523
+    lastmod: 1753318473008
     uid: 7b2n71wR3k6gd8
     behaviors: []
     extendTypes: ''
@@ -469,6 +483,21 @@ assets:
           if (actions.Use.down && !this.wasPressed) {
               this.wasPressed = true;
               this.beingPressed = true;
+
+              var player = templates.list['Player'][0];
+              const tileSize = 64;
+              const gridX = Math.floor(player.x / tileSize);
+              const gridY = Math.floor(player.y / tileSize);
+              if (
+                  gridY >= 0 && gridY < rooms.current.grid.length &&
+                  gridX >= 0 && gridX < rooms.current.grid[0].length
+              ) {
+                  const square = rooms.current.grid[gridY][gridX];
+                  console.log('Tile at (${gridX}, ${gridY}) = ${square}');
+              } else {
+                  console.log('Out of bounds: (${gridX}, ${gridY})');
+              }
+                
               console.log('Button pressed!');
           }
           else if (!actions.Use.down && this.wasPressed) {
@@ -508,7 +537,7 @@ assets:
         lib: core
     extends:
       cgroup: ''
-    lastmod: 1753069028636
+    lastmod: 1753319445328
     uid: KCRtp4jH6gWCf9
     behaviors: []
     extendTypes: ''
