@@ -31,6 +31,7 @@ actions:
   - name: Use
     methods:
       - code: vkeys.Vk1
+      - code: keyboard.Space
   - name: MoveY
     methods:
       - code: keyboard.ArrowUp
@@ -101,7 +102,7 @@ assets:
         bindings: {}
     tiles: []
     extends: {}
-    lastmod: 1753319002603
+    lastmod: 1753396098563
     events:
       - eventKey: OnRoomStart
         code: >-
@@ -137,35 +138,69 @@ assets:
     events:
       - eventKey: OnStep
         lib: core
-        code: |-
+        code: >-
           // Set movement speed
+
           this.mySpeed = 3;
 
+
           // Move based on input axis values
+
           this.x += actions.MoveX.value * this.mySpeed * u.delta;
+
           this.y += actions.MoveY.value * this.mySpeed * u.delta;
 
+
           // Clamp X position
+
           if (this.x < 0) {
               this.x = 0;
           } else if (this.x > camera.width) {
               this.x = camera.width;
           }
 
+
           // Clamp Y position
+
           if (this.y < 0) {
               this.y = 0;
           } else if (this.y > camera.height) {
               this.y = camera.height;
           }
 
+
+          /*
+
           // Optional: flip sprite depending on direction
+
           if (actions.MoveX.value < 0) {
               this.scale.x = -1;
               this.facing = 'left';
           } else if (actions.MoveX.value > 0) {
               this.scale.x = 1;
               this.facing = 'right';
+          }
+
+          if (actions.MoveY.value < 0) {
+              //this.scale.y = -1;  // this part doesn't work yet since we need a 'forward' and 'backwards' facing texture.
+              this.facingUp = 'up';
+          } else if (actions.MoveY.value > 0) {
+              //this.scale.y = 1;  // this part doesn't work yet since we need a 'forward' and 'backwards' facing texture.
+              this.facingUp = 'down';
+          }
+
+          */
+
+
+          if (Math.abs(actions.MoveX.value) > 0 || Math.abs(actions.MoveY.value)
+          > 0) {
+              if (Math.abs(actions.MoveX.value) > Math.abs(actions.MoveY.value)) {
+                  // Horizontal movement wins
+                  this.facing = (actions.MoveX.value < 0) ? 'left' : 'right';
+                  this.scale.x = (actions.MoveX.value < 0) ? -1 : 1;
+              } else {
+                  this.facing = (actions.MoveY.value < 0) ? 'up' : 'down';
+              }
           }
         arguments: {}
       - eventKey: OnCreate
@@ -179,6 +214,9 @@ assets:
           camera.borderX = 450
           camera.borderY = 200
           camera.drift = 0.95;
+
+          this.prevMoveX = 0;
+          this.prevMoveY = 0;
         arguments: {}
         lib: core
       - eventKey: OnDraw
@@ -199,7 +237,7 @@ assets:
         lib: core
     extends:
       cgroup: ''
-    lastmod: 1753318473008
+    lastmod: 1753415106010
     uid: 7b2n71wR3k6gd8
     behaviors: []
     extendTypes: ''
@@ -485,17 +523,58 @@ assets:
               this.beingPressed = true;
 
               var player = templates.list['Player'][0];
+              if (!player)
+                  return;
               const tileSize = 64;
-              const gridX = Math.floor(player.x / tileSize);
-              const gridY = Math.floor(player.y / tileSize);
+              let gridX = Math.floor(player.x / tileSize);
+              //gridX = (player.facing === 'left') ? --gridX : ++gridX; 
+              let gridY = Math.floor(player.y / tileSize);
+              //gridY = (player.facing === 'up') ? --gridY : ++gridY; 
+              switch (player.facing) {
+                  case 'left':
+                      gridX -= 2;
+                      gridY -= 1;
+                      break;
+                  case 'right':
+                      gridX += 0;
+                      gridY -= 1;
+                      break;
+                  case 'up':
+                      gridX -= 1;
+                      gridY -= 2;
+                      break;
+                  case 'down':
+                      gridX -= 1;
+                      gridY += 0;
+                      break;
+              }
+
+              const snapX = gridX * tileSize + tileSize / 2;
+              const snapY = gridY * tileSize + tileSize / 2;
               if (
                   gridY >= 0 && gridY < rooms.current.grid.length &&
                   gridX >= 0 && gridX < rooms.current.grid[0].length
               ) {
-                  const square = rooms.current.grid[gridY][gridX];
-                  console.log('Tile at (${gridX}, ${gridY}) = ${square}');
+                  const tile = rooms.current.grid?.[gridY]?.[gridX];
+
+                  if (tile === null) {
+                      // Create a new crop object
+                      const crop = {
+                          type: 'turnip',
+                          stage: 0,
+                          water: false,
+                          growthTimer: 0
+                      };
+
+                      templates.copy('plant', snapX, snapY);
+
+                      rooms.current.grid[gridY][gridX] = crop;
+                      console.log(`Planted ${crop.type} at (${gridX}, ${gridY})`);
+                  } else {
+                      console.log(`Tile at (${gridX}, ${gridY}) is already occupied:`, tile);
+                  }
               } else {
-                  console.log('Out of bounds: (${gridX}, ${gridY})');
+                  console.log(`Out of bounds: (${gridX}, ${gridY})`);
               }
                 
               console.log('Button pressed!');
@@ -537,7 +616,7 @@ assets:
         lib: core
     extends:
       cgroup: ''
-    lastmod: 1753319445328
+    lastmod: 1753415448739
     uid: KCRtp4jH6gWCf9
     behaviors: []
     extendTypes: ''
@@ -3932,7 +4011,7 @@ assets:
     source: >-
       C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
       Animals, Farm, and Puzzle sprites\GardenBed_Carrots_01.png
-  - lastmod: 1753069507437
+  - lastmod: 1753412205459
     type: texture
     name: GardenBed_Carrots_02
     untill: 0
@@ -3940,8 +4019,8 @@ assets:
       - 1
       - 1
     axis:
-      - 0
-      - 0
+      - 64
+      - 64
     marginx: 0
     marginy: 0
     imgWidth: 128
@@ -3952,16 +4031,17 @@ assets:
     offy: 0
     origname: ifpHkj9BMnH9cJL.png
     shape: rect
-    left: 0
-    right: 128
-    top: 0
-    bottom: 128
+    left: 64
+    right: 64
+    top: 64
+    bottom: 64
     uid: fpHkj9BMnH9cJL
     padding: 1
     isBlank: false
     source: >-
       C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Comigo's
       Animals, Farm, and Puzzle sprites\GardenBed_Carrots_02.png
+    r: 32
   - lastmod: 1753069507437
     type: texture
     name: Fox_Right
@@ -5043,6 +5123,30 @@ assets:
       C:\Users\joshb\Downloads\ct.js.v5.2.1.for.win64\win64\package.nw\bundledAssets\textures\Kenney's
       Platformer Characters\Adventurer_9x3.png
     tiled: false
+  - type: template
+    baseClass: AnimatedSprite
+    name: plant
+    depth: 0
+    texture: fpHkj9BMnH9cJL
+    playAnimationOnStart: false
+    loopAnimation: true
+    animationFPS: 30
+    visible: true
+    events:
+      - eventKey: OnStep
+        lib: core
+        code: this.move();
+        arguments: {}
+      - eventKey: OnCreate
+        code: this.scale.x = 0.5;
+        arguments: {}
+        lib: core
+    extends:
+      cgroup: ''
+    lastmod: 1753412135238
+    uid: 4R1tb6NN8DDK2h
+    behaviors: []
+    extendTypes: ''
 globalVars: []
 settings:
   authoring:

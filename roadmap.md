@@ -6,8 +6,8 @@ A top-down 2D farming + automation game with a satirical twist. You're not savin
 
 ## Phase 1: MVP Prototype (Core Loop in CT.js)
 - [x] Basic player movement (WASD + animation)
-- [ ] Modular grid system with snapping or placement rules
-- [ ] Tile-based world with interactable farm plots
+- [x] Modular grid system with snapping or placement rules
+- [x] Tile-based world with interactable farm plots
 - [ ] Crop system: plant → grow over time → harvest (uses time system)
 - [ ] Basic time system (used to drive plant growth, not visual day/night)
 - [ ] Inventory system (basic)
