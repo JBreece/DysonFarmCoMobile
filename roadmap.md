@@ -8,7 +8,7 @@ A top-down 2D farming + automation game with a satirical twist. You're not savin
 - [x] Basic player movement (WASD + animation)
 - [x] Modular grid system with snapping or placement rules
 - [x] Tile-based world with interactable farm plots
-- [ ] Crop system: plant → grow over time → harvest (uses time system)
+- [ ] Crop system: plant -> grow over time -> harvest (uses time system)
 - [ ] Basic time system (used to drive plant growth, not visual day/night)
 - [ ] Inventory system (basic)
 - [ ] Sell harvested crops for currency
@@ -22,7 +22,7 @@ A top-down 2D farming + automation game with a satirical twist. You're not savin
 ## Phase 2: Core Gameplay Expansion
 - [ ] Simple power system (machines require energy to run)
 - [ ] Additional machines: seed planters, watering units, composters, etc.
-- [ ] Factory-style crafting: turn crops → materials → products
+- [ ] Factory-style crafting: turn crops -> materials -> products
 - [ ] Multi-tiered crops with different growth/sell values
 - [ ] Machine upgrades (e.g. faster output, more efficient)
 - [ ] Storage containers or silos (automated item handling)
