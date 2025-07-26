@@ -25,6 +25,19 @@ libs:
           'Adventurer', 'Player_Run',
           [10, 9]
       );
+
+      sprite(
+          'Basic_tools_and_meterials', 'watering_can_icon',
+          [0]
+      );
+      sprite(
+          'Basic_tools_and_meterials', 'axe_icon',
+          [1]
+      );
+      sprite(
+          'Basic_tools_and_meterials', 'hoe_icon',
+          [2]
+      );
 startroom: -1
 contentTypes: []
 actions:
@@ -52,6 +65,15 @@ actions:
         multiplier: -1
       - code: keyboard.ArrowRight
       - code: vkeys.Vjoy1X
+  - name: Hotkey1
+    methods:
+      - code: keyboard.Digit1
+  - name: Hotkey2
+    methods:
+      - code: keyboard.Digit2
+  - name: Hotkey3
+    methods:
+      - code: keyboard.Digit3
 scripts: []
 assets:
   - type: room
@@ -102,11 +124,13 @@ assets:
         bindings: {}
     tiles: []
     extends: {}
-    lastmod: 1753490243093
+    lastmod: 1753493717892
     events:
       - eventKey: OnRoomStart
-        code: >
+        code: >-
           this.mainUi = rooms.append('UI_InGame');
+
+          localStorage.setItem('inventory','');
 
 
           const tileSize = 64;
@@ -141,6 +165,16 @@ assets:
                   console.log(`typeof grid object: ${typeof this.grid[y][x]}`);
               }
           }
+
+
+          //TODO remove this and put the tool creation elsewhere, note that the
+          name needs to be there for the texture
+
+          const tool = templates.copy('tool', 128, 128);
+
+          tool.name = 'hoe_icon';
+
+          tool.tex = tool.name;
         arguments: {}
         lib: core
     behaviors: []
@@ -256,8 +290,8 @@ assets:
         arguments: {}
         lib: core
     extends:
-      cgroup: ''
-    lastmod: 1753474345625
+      cgroup: player
+    lastmod: 1753493934210
     uid: 7b2n71wR3k6gd8
     behaviors: []
     extendTypes: ''
@@ -345,7 +379,7 @@ assets:
         bindings: {}
     tiles: []
     extends: {}
-    lastmod: 1753050950434
+    lastmod: 1753495030682
     events: []
     behaviors: []
     extendTypes: ''
@@ -363,6 +397,20 @@ assets:
       - eventKey: OnStep
         lib: core
         code: |-
+          if (actions.Hotkey1.down){
+              this.equipSelected = 'unequipped';
+              console.log(`equipped! with ${this.equipSelected}`);
+          }
+          if (actions.Hotkey2.down){
+              if(localStorage.getItem('inventory').includes('hoe_icon'))
+                  this.equipSelected = 'tool';
+              console.log(`equipped! with ${this.equipSelected}`);
+          }
+          if (actions.Hotkey3.down){
+              this.equipSelected = 'seed';
+              console.log(`equipped! with ${this.equipSelected}`);
+          }
+
           if (actions.Use.down && !this.wasPressed) {
               this.wasPressed = true;
               this.beingPressed = true;
@@ -372,9 +420,7 @@ assets:
                   return;
               const tileSize = 64;
               let gridX = Math.floor(player.x / tileSize);
-              //gridX = (player.facing === 'left') ? --gridX : ++gridX; 
               let gridY = Math.floor(player.y / tileSize);
-              //gridY = (player.facing === 'up') ? --gridY : ++gridY; 
               switch (player.facing) {
                   case 'left':
                       gridX -= 0;
@@ -402,19 +448,26 @@ assets:
               ) {
                   const tile = rooms.current.grid?.[gridY]?.[gridX];
 
-                  if (tile.state === 'grass') {
-                      // Create a new crop object
-                      const crop = {
-                          type: 'turnip',
-                          stage: 0,
-                          water: false,
-                          growthTimer: 0
-                      };
+                  // tilling the ground
+                  if (tile.state === 'grass'){
+                      if(this.equipSelected === 'tool')
+                          tile.state = 'tilled';
+                  }
+                  // planting a crop
+                  else if (tile.state === 'tilled') {
+                      if(this.equipSelected === 'seed'){
+                          const crop = {
+                              type: 'turnip',
+                              stage: 0,
+                              water: false,
+                              growthTimer: 0
+                          };
 
-                      templates.copy('plant', snapX, snapY);
+                          templates.copy('plant', snapX, snapY);
 
-                      rooms.current.grid[gridY][gridX] = crop;
-                      console.log(`Planted ${crop.type} at (${snapX}, ${snapY})`);
+                          rooms.current.grid[gridY][gridX] = crop;
+                          console.log(`Planted ${crop.type} at (${snapX}, ${snapY})`);
+                      }
                   } else {
                       console.log(`Tile at (${gridX}, ${gridY}) is already occupied:`, tile);
                   }
@@ -461,14 +514,14 @@ assets:
         lib: core
     extends:
       cgroup: ''
-    lastmod: 1753490658113
+    lastmod: 1753494978758
     uid: KCRtp4jH6gWCf9
     behaviors: []
     extendTypes: ''
   - type: template
     baseClass: AnimatedSprite
     name: plant
-    depth: 9
+    depth: 8
     texture: fpHkj9BMnH9cJL
     playAnimationOnStart: false
     loopAnimation: true
@@ -481,7 +534,7 @@ assets:
         lib: core
     extends:
       cgroup: ''
-    lastmod: 1753474360084
+    lastmod: 1753492520740
     uid: 4R1tb6NN8DDK2h
     behaviors: []
     extendTypes: ''
@@ -1189,7 +1242,7 @@ assets:
             source: >-
               D:\ctjs assets\TILESET-VILLAGE-TOP-DOWN\TILESET VILLAGE TOP
               DOWN\GROUND DETAIL 5 - NIGHT.png
-          - lastmod: 1753472734287
+          - lastmod: 1753494648591
             type: texture
             name: GROUND_DETAIL_4_-_DAY
             untill: 0
@@ -1197,8 +1250,8 @@ assets:
               - 1
               - 1
             axis:
-              - 0
-              - 0
+              - 8
+              - 8
             marginx: 0
             marginy: 0
             imgWidth: 16
@@ -1209,16 +1262,29 @@ assets:
             offy: 0
             origname: iDgMTPj7qRH6z11.png
             shape: rect
-            left: 0
-            right: 16
-            top: 0
-            bottom: 16
+            left: 8
+            right: 8
+            top: 8
+            bottom: 8
             uid: DgMTPj7qRH6z11
             padding: 1
             isBlank: false
             source: >-
               D:\ctjs assets\TILESET-VILLAGE-TOP-DOWN\TILESET VILLAGE TOP
               DOWN\GROUND DETAIL 4 - DAY.png
+            r: 8
+            stripPoints:
+              - x: 0
+                'y': -8
+              - x: 8
+                'y': -2
+              - x: 5
+                'y': 6
+              - x: -5
+                'y': 6
+              - x: -8
+                'y': -2
+            closedStrip: true
           - lastmod: 1753472734288
             type: texture
             name: GROUND_DETAIL_5_-_DAY
@@ -7350,13 +7416,6 @@ assets:
           D:\Valentines2025\valentines2025\You Fight
           Monsters\img\iKnzRfJg8tf8HTL.png
       - type: folder
-        uid: mrJdzR3cdWLdRL
-        colorClass: act
-        icon: help-circle
-        name: New folder
-        lastmod: 1753491100882
-        entries: []
-      - type: folder
         uid: CJj3Kzk2hM654p
         colorClass: act
         icon: help-circle
@@ -7783,7 +7842,7 @@ assets:
             source: >-
               D:\ctjs assets\Sprout Lands - Sprites - Basic pack\Sprout Lands -
               Sprites - Basic pack\Tilesets\Water.png
-          - lastmod: 1753491459352
+          - lastmod: 1753492740002
             type: texture
             name: Basic_tools_and_meterials
             untill: 0
@@ -7791,8 +7850,8 @@ assets:
               - 3
               - 2
             axis:
-              - 0
-              - 0
+              - 8
+              - 8
             marginx: 0
             marginy: 0
             imgWidth: 48
@@ -7803,16 +7862,17 @@ assets:
             offy: 0
             origname: i2R5dd395q1WrpD.png
             shape: rect
-            left: 0
-            right: 48
-            top: 0
-            bottom: 32
+            left: 8
+            right: 8
+            top: 8
+            bottom: 8
             uid: 2R5dd395q1WrpD
             padding: 1
             isBlank: false
             source: >-
               D:\ctjs assets\Sprout Lands - Sprites - Basic pack\Sprout Lands -
               Sprites - Basic pack\Objects\Basic_tools_and_meterials.png
+            r: 8
           - lastmod: 1753491411007
             type: texture
             name: Basic_Grass_Biom_things
@@ -8283,6 +8343,9 @@ assets:
               case('grass_detail_3'):
                   this.tex = 'GRASS_DETAIL_3_-_DAY';
                   break;
+              case('tilled'):
+                  this.tex = 'GROUND_DETAIL_4_-_DAY'
+                  break;
               default:
                   console.log('no state found for tile');
                   break;
@@ -8297,8 +8360,56 @@ assets:
         lib: core
     extends:
       cgroup: ''
-    lastmod: 1753485195997
+    lastmod: 1753494665266
     uid: g3PCb9h66qmQTB
+    behaviors: []
+    extendTypes: ''
+  - type: template
+    baseClass: AnimatedSprite
+    name: tool
+    depth: 9
+    texture: -1
+    playAnimationOnStart: false
+    loopAnimation: true
+    animationFPS: 30
+    visible: true
+    events:
+      - eventKey: OnCreate
+        code: >-
+          this.name = 'watering_can_icon';
+
+          this.level = 0;
+
+          this.powers = [];
+
+          this.pickedUp = false;
+
+
+          this.tex = this.name;
+
+          this.scale.x = 4;
+
+          this.scale.y = 4;
+
+          //console.log(`tool ${this.name} with texture ${this.texture} at
+          ${this.x}, ${this.y}`);
+        arguments: {}
+        lib: core
+      - eventKey: collisionCGroup
+        code: |-
+          this.pickedUp = true;
+          let inventory = localStorage.getItem('inventory');
+          inventory = inventory + this.name + ',';
+          localStorage.setItem('inventory', inventory);
+
+          this.kill = true;
+        arguments:
+          group: player
+        lib: place
+    extends:
+      cgroup: tool
+    lastmod: 1753493675059
+    uid: 5gNDQjFHH78Kdn
     behaviors: []
     extendTypes: ''
 globalVars: []

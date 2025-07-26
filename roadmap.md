@@ -10,7 +10,7 @@ A top-down 2D farming + automation game with a satirical twist. You're not savin
 - [x] Tile-based world with interactable farm plots
 - [ ] Crop system: plant -> grow over time -> harvest (uses time system)
 - [ ] Basic time system (used to drive plant growth, not visual day/night)
-- [ ] Inventory system (basic)
+- [x] Inventory system (basic)
 - [ ] Sell harvested crops for currency
 - [ ] Build machine placement system (hotbar or UI-based)
 - [ ] First automation unit: Crop Harvester
